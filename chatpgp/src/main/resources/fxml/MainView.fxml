@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs50.alfvag.controllers.MainViewController">
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
@@ -25,9 +24,6 @@
       <TextArea fx:id="textAreaChat" editable="false" layoutX="14.0" layoutY="58.0" prefHeight="274.0" prefWidth="572.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="58.0" />
       <TextField fx:id="textFieldMessage" layoutX="14.0" layoutY="340.0" prefHeight="48.0" prefWidth="470.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="340.0" />
       <Button fx:id="buttonSend" layoutX="496.0" layoutY="340.0" mnemonicParsing="false" onAction="#buttonClickSend" prefHeight="48.0" prefWidth="90.0" text="Send" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="340.0" />
-      <Label fx:id="labelMode" layoutX="307.0" layoutY="34.0" text="Mode:" AnchorPane.leftAnchor="280.0" AnchorPane.topAnchor="35.0" />
-      <TextField fx:id="textFieldUsername" layoutX="70.0" layoutY="30.0" AnchorPane.leftAnchor="75.0" />
-      <Label layoutX="14.0" layoutY="36.0" text="Username:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="35.0" />
-      <Button fx:id="buttonSelectUsername" layoutX="228.0" layoutY="30.0" mnemonicParsing="false" onAction="#buttonClickSelectUsername" text="OK" />
+      <Label fx:id="labelMode" layoutX="307.0" layoutY="34.0" text="Mode:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="35.0" />
    </children>
 </AnchorPane>

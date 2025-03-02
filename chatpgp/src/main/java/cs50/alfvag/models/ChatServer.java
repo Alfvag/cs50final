@@ -34,31 +34,44 @@ public class ChatServer {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
 
-                out.println("Enter your username:");
-                username = in.readLine().trim();
-
-                synchronized (clients) {
-                    while (clients.containsKey(username) || username.isEmpty()) {
-                        out.println("Username taken. Enter another:");
-                        username = in.readLine().trim();
-                    }
-                    clients.put(username, out);
-                }
-
-                broadcast("User " + username + " joined!", "Server");
-
+                // Wait for client to send username command before accepting messages
                 String message;
                 while ((message = in.readLine()) != null) {
-                    if (message.startsWith("@")) {
+                    if (message.startsWith("/setname ")) {
+                        setUsername(message.substring(9).trim());
+                    } else if (username == null) {
+                        out.println("Error: Set your username using /setname <username>");
+                    } else if (message.equalsIgnoreCase("/quit")) {
+                        break;
+                    } else if (message.startsWith("@")) {
                         sendPrivateMessage(message);
                     } else {
                         broadcast(message, username);
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
+
                 disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Set the client's username
+        private void setUsername(String newUsername) {
+            synchronized (clients) {
+                if (clients.containsKey(newUsername) || newUsername.isEmpty()) {
+                    out.println("Error: Username taken or invalid.");
+                    return;
+                }
+
+                if (this.username != null) {
+                    clients.remove(this.username);
+                }
+
+                this.username = newUsername;
+                clients.put(username, out);
+                out.println("Username set to: " + username);
+                broadcast("User " + username + " joined!", "Server");
             }
         }
 

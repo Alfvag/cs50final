@@ -2,37 +2,58 @@ package cs50.alfvag.models;
 
 import java.io.*;
 import java.net.*;
+import java.util.function.Consumer;
 
 public class ChatClient {
-    private static final String SERVER_ADDRESS = "127.0.0.1";
-    private static final int PORT = 12345;
+    private Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
+    private Consumer<String> messageListener;
+    private String username;
 
-    public static void startClient() {
-        try (Socket socket = new Socket(SERVER_ADDRESS, PORT);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in))) {
+    public ChatClient(String serverAddress, int port, Consumer<String> messageListener) {
+        try {
+            this.socket = new Socket(serverAddress, port);
+            this.out = new PrintWriter(socket.getOutputStream(), true);
+            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.messageListener = messageListener;
 
-            System.out.println("Connected to chat server.");
+            new Thread(this::listenForMessages).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            Thread receiveThread = new Thread(() -> {
-                try {
-                    String message;
-                    while ((message = in.readLine()) != null) {
-                        System.out.println(message);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            receiveThread.start();
+    // Function to set username
+    public void setUsername(String username) {
+        this.username = username;
+        out.println("/setname " + username);
+    }
 
-            String userMessage;
-            while ((userMessage = userInput.readLine()) != null) {
-                out.println(userMessage);
+    private void listenForMessages() {
+        try {
+            String message;
+            while ((message = in.readLine()) != null) {
+                messageListener.accept(message);
             }
+        } catch (IOException e) {
+            System.out.println("Connection closed.");
+        }
+    }
 
-        } catch (Exception e) {
+    public void sendMessage(String message) {
+        if (username == null) {
+            messageListener.accept("Error: Set your username first using setUsername()");
+            return;
+        }
+        out.println(message);
+    }
+
+    public void disconnect() {
+        try {
+            out.println("/quit");
+            socket.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

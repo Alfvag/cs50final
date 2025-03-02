@@ -4,7 +4,6 @@ import cs50.alfvag.models.AppModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -12,6 +11,7 @@ import javafx.stage.Stage;
 public class AppController {
     private final Stage primaryStage;
     private final AppModel appModel;
+    private MainViewController mainViewController;
 
     public AppController(Stage primaryStage, AppModel appModel) {
         this.primaryStage = primaryStage;
@@ -24,22 +24,36 @@ public class AppController {
             loader.setLocation(getClass().getResource("/fxml/MainView.fxml"));
             Parent root = loader.load();
             MainViewController mainController = loader.getController();
+            this.mainViewController = mainController;
             mainController.setAppController(this);
             mainController.setAppModel(appModel);
             primaryStage.setScene(new Scene(root));
-            //primaryStage.getIcons().add(new Image("logo.png"));
             primaryStage.setTitle("JavaChat");
             primaryStage.show();
+            showUsernameView();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void reciveMessage(String message) {
-        //TODO
-    }
+    public void showUsernameView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/UsernameView.fxml"));
+            Stage modalStage = new Stage();
+            modalStage.setScene(new Scene(loader.load()));
+            
+            UsernameViewController controller = loader.getController();
+            controller.setAppModel(appModel);
+            //controller.setAppModel(appModel);
 
-    public void sendMessage(String message) {
-        //TODO
+            modalStage.setTitle("Select username");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            Stage currStage = (Stage) primaryStage.getScene().getWindow();
+            modalStage.initOwner(currStage);
+            modalStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
