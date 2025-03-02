@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* General styling */
+.root {
+    -fx-font-family: "Noto Sans", serif;
+    -fx-font-optical-sizing: auto;
+    -fx-font-style: normal;
+    -fx-background-color: #f0f0f0;
+}
+
+/* TextArea styling */
+.text-area {
+    -fx-background-color: #ecf0f1;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+}
+
+/* TextField styling */
+.text-field {
+    -fx-background-color: #ecf0f1;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Label styling */
+.label {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 14px;
+}
+
+/* RadioMenuItem styling */
+.radio-menu-item {
+    -fx-text-fill: #2c3e50;
+}
+
+.radio-menu-item:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}

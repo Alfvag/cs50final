@@ -1,6 +1,5 @@
 package cs50.alfvag.controllers;
 
-import cs50.alfvag.App;
 import cs50.alfvag.models.AppModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,8 +14,6 @@ public class UsernameViewController {
 
     @FXML
     private Button buttonSelect;
-
-    private MainViewController mainViewController;
 
     @FXML
     private void buttonClickSelect() {

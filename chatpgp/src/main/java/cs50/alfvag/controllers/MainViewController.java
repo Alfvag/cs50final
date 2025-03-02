@@ -14,7 +14,6 @@ import javafx.scene.control.ToggleGroup;
 
 public class MainViewController {
     private AppModel appModel;
-    private AppController appController;
     private ChatClient chatClient = null;
 
     enum Mode {
@@ -75,7 +74,7 @@ public class MainViewController {
     @FXML
     private void clientToggleSelected() {
         if (clientToggle.isSelected()) {
-            labelMode.setText("Mode: Client");
+            labelMode.setText("Mode: Client Username: " + appModel.getUsername());
 
             textAreaChat.appendText("Client started...\n");
             textAreaChat.setDisable(false);
@@ -96,19 +95,20 @@ public class MainViewController {
     private void buttonClickSend() {
         // Handle send button click
         String message = textFieldMessage.getText();
+        
         if (!message.isEmpty() && mode == Mode.CLIENT) {
-            textAreaChat.appendText("You: " + message + "\n");
             textFieldMessage.clear();
+
+            if (message.startsWith("@")) {
+                textAreaChat.appendText(appModel.getUsername() + ": [Private] " + message + "\n");
+            }
+
             chatClient.sendMessage(message);
         }
     }
 
     private void updateChat(String message) {
         Platform.runLater(() -> textAreaChat.appendText(message + "\n"));
-    }
-
-    public void setAppController(AppController appController) {
-        this.appController = appController;
     }
 
     public void setAppModel(AppModel appModel) {
@@ -119,6 +119,7 @@ public class MainViewController {
         Thread serverThread = new Thread(() -> {
             ChatServer.startServer();
         });
+
         serverThread.setDaemon(true); // Ensures the server thread stops when the app closes
         serverThread.start();
     }

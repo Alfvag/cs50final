@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 public class AppController {
     private final Stage primaryStage;
     private final AppModel appModel;
-    private MainViewController mainViewController;
 
     public AppController(Stage primaryStage, AppModel appModel) {
         this.primaryStage = primaryStage;
@@ -24,8 +23,6 @@ public class AppController {
             loader.setLocation(getClass().getResource("/fxml/MainView.fxml"));
             Parent root = loader.load();
             MainViewController mainController = loader.getController();
-            this.mainViewController = mainController;
-            mainController.setAppController(this);
             mainController.setAppModel(appModel);
             primaryStage.setScene(new Scene(root));
             primaryStage.setTitle("JavaChat");
@@ -45,7 +42,6 @@ public class AppController {
             
             UsernameViewController controller = loader.getController();
             controller.setAppModel(appModel);
-            //controller.setAppModel(appModel);
 
             modalStage.setTitle("Select username");
             modalStage.initModality(Modality.APPLICATION_MODAL);

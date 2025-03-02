@@ -6,10 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs50.alfvag.controllers.UsernameViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="300.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs50.alfvag.controllers.UsernameViewController">
    <children>
       <Label layoutX="32.0" layoutY="44.0" text="Please select a username:" />
-      <TextField fx:id="textFieldUsername" layoutX="32.0" layoutY="71.0" />
-      <Button fx:id="buttonSelect" layoutX="191.0" layoutY="71.0" mnemonicParsing="false" onAction="#buttonClickSelect" text="Select" />
+      <TextField fx:id="textFieldUsername" layoutX="32.0" layoutY="71.0" prefHeight="42.0" prefWidth="170.0" />
+      <Button fx:id="buttonSelect" layoutX="211.0" layoutY="72.0" mnemonicParsing="false" onAction="#buttonClickSelect" text="Select" />
    </children>
 </AnchorPane>
