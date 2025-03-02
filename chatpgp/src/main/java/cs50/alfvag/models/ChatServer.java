@@ -8,10 +8,12 @@ public class ChatServer {
     private static final int PORT = 12345;
     private static Map<String, PrintWriter> clients = new HashMap<>();
 
+    // Method to start the chat server
     public static void startServer() {
         System.out.println("Chat server started...");
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
+                // Accept new client connections and start a new thread for each client
                 new ClientHandler(serverSocket.accept()).start();
             }
         } catch (IOException e) {
@@ -19,16 +21,19 @@ public class ChatServer {
         }
     }
 
+    // Inner class to handle client connections
     private static class ClientHandler extends Thread {
         private Socket socket;
         private PrintWriter out;
         private BufferedReader in;
         private String username;
 
+        // Constructor to initialize the ClientHandler with the client's socket
         public ClientHandler(Socket socket) {
             this.socket = socket;
         }
 
+        // Run method to handle client communication
         public void run() {
             try {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -50,13 +55,14 @@ public class ChatServer {
                     }
                 }
 
+                // Disconnect the client when the loop ends
                 disconnect();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        // Set the client's username
+        // Method to set the client's username
         private void setUsername(String newUsername) {
             synchronized (clients) {
                 if (clients.containsKey(newUsername) || newUsername.isEmpty()) {
@@ -75,6 +81,7 @@ public class ChatServer {
             }
         }
 
+        // Method to send a private message to a specific user
         private void sendPrivateMessage(String message) {
             int firstSpace = message.indexOf(" ");
             if (firstSpace == -1) {
@@ -94,6 +101,7 @@ public class ChatServer {
             }
         }
 
+        // Method to broadcast a message to all connected clients
         private void broadcast(String message, String sender) {
             synchronized (clients) {
                 for (PrintWriter writer : clients.values()) {
@@ -102,6 +110,7 @@ public class ChatServer {
             }
         }
 
+        // Method to disconnect the client
         private void disconnect() {
             try {
                 socket.close();

@@ -14,12 +14,4 @@ public class AppModel {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    public void startServer() {
-
-    }
-
-    public void startClient() {
-
-    }
 }
